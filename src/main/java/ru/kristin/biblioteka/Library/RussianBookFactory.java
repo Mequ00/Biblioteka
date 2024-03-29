@@ -1,21 +1,22 @@
 package main.java.ru.kristin.biblioteka.Library;
 
-import main.java.ru.kristin.biblioteka.Library.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import main.java.ru.kristin.biblioteka.manager.CsvProvider;
 
 public class RussianBookFactory implements Bookfactory {
-    private static List<String> educationNames = new ArrayList<>();
-    private static List<String> types = new ArrayList<>();
-    private static List<String> adjectives  = new ArrayList<>();
-    private static List<String> mainWords = new ArrayList<>();
-    private static List<String> whoms = new ArrayList<>();
-    private static List<String> fairyWords = new ArrayList<>();
-    private static List<String> mainCharacters = new ArrayList<>();
-    
-    
-    
+
+    private List<String> educationNames = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
+    private List<String> adjectives = new ArrayList<>();
+    private List<String> mainWords = new ArrayList<>();
+    private List<String> whoms = new ArrayList<>();
+    private List<String> fairyWords = new ArrayList<>();
+    private List<String> mainCharacters = new ArrayList<>();
+    private final String fictionPath = "C:\\Users\\krist\\Downloads\\Telegram Desktop\\Рус.лит..csv";
+    private final String eductionPath ="C:\\Users\\krist\\Downloads\\Telegram Desktop\\Рус.уч. (3).csv";
+    private final CsvProvider provider = new CsvProvider();
 
     @Override
     public Book createTextbook() {
@@ -28,16 +29,16 @@ public class RussianBookFactory implements Bookfactory {
 
     @Override
     public Book createFiction() {
-        String fullName  = null;
+        String fullName = null;
         Random random = new Random();
         switch (random.nextInt(2)) {
             case 0 -> {
                 String adjective = adjectives.get(random.nextInt(adjectives.size()));
                 String mainWord = mainWords.get(random.nextInt(mainWords.size()));
                 String whom = whoms.get(random.nextInt(whoms.size()));
-                fullName = adjective + " " + mainWord  + " " + whom;
+                fullName = adjective + " " + mainWord + " " + whom;
             }
-            case 1 ->{
+            case 1 -> {
                 String fairyWord = fairyWords.get(random.nextInt(fairyWords.size()));
                 String mainCharacter = mainCharacters.get(random.nextInt(mainCharacters.size()));
                 fullName = fairyWord + " о " + mainCharacter;
@@ -46,61 +47,77 @@ public class RussianBookFactory implements Bookfactory {
         return new RussianFiction(fullName);
     }
 
-    public static List<String> getEducationNames() {
+    @Override
+    public void cleanInfo() {
+        this.adjectives.clear();
+        this.educationNames.clear();
+        this.fairyWords.clear();
+        this.mainCharacters.clear();
+        this.mainWords.clear();
+        this.types.clear();
+        this.whoms.clear();
+    }
+
+    @Override
+    public void readInfo() {
+        provider.readRussianEducationBooksInfo(eductionPath, this);
+        provider.readRussianFictionBooksInfo(fictionPath, this);
+    }
+
+    public List<String> getEducationNames() {
         return educationNames;
     }
 
-    public static void setEducationNames(List<String> educationNames) {
-        RussianBookFactory.educationNames = educationNames;
+    public void setEducationNames(List<String> educationNames) {
+        this.educationNames = educationNames;
     }
 
-    public static List<String> getTypes() {
+    public List<String> getTypes() {
         return types;
     }
 
-    public static void setTypes(List<String> types) {
-        RussianBookFactory.types = types;
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
-    public static List<String> getAdjectives() {
+    public List<String> getAdjectives() {
         return adjectives;
     }
 
-    public static void setAdjectives(List<String> adjectives) {
-        RussianBookFactory.adjectives = adjectives;
+    public void setAdjectives(List<String> adjectives) {
+        this.adjectives = adjectives;
     }
 
-    public static List<String> getMainWords() {
+    public List<String> getMainWords() {
         return mainWords;
     }
 
-    public static void setMainWords(List<String> mainWords) {
-        RussianBookFactory.mainWords = mainWords;
+    public void setMainWords(List<String> mainWords) {
+        this.mainWords = mainWords;
     }
 
-    public static List<String> getWhoms() {
+    public List<String> getWhoms() {
         return whoms;
     }
 
-    public static void setWhoms(List<String> whoms) {
-        RussianBookFactory.whoms = whoms;
+    public void setWhoms(List<String> whoms) {
+        this.whoms = whoms;
     }
 
-    public static List<String> getFairyWords() {
+    public List<String> getFairyWords() {
         return fairyWords;
     }
 
-    public static void setFairyWords(List<String> fairyWords) {
-        RussianBookFactory.fairyWords = fairyWords;
+    public void setFairyWords(List<String> fairyWords) {
+        this.fairyWords = fairyWords;
     }
 
-    public static List<String> getMainCharacters() {
+    public List<String> getMainCharacters() {
         return mainCharacters;
     }
 
-    public static void setMainCharacters(List<String> mainCharacters) {
-        RussianBookFactory.mainCharacters = mainCharacters;
+    public void setMainCharacters(List<String> mainCharacters) {
+        this.mainCharacters = mainCharacters;
     }
-    
-    
+
 }

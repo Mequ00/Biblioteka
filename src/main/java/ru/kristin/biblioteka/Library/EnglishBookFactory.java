@@ -1,19 +1,22 @@
 package main.java.ru.kristin.biblioteka.Library;
 
-import main.java.ru.kristin.biblioteka.Library.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import main.java.ru.kristin.biblioteka.manager.CsvProvider;
 
 public class EnglishBookFactory implements Bookfactory {
 
-    private static List<String> educationNames = new ArrayList<>();
-    private static List<String> universities = new ArrayList<>();
-    private static List<String> educationAuthors = new ArrayList<>();
-    private static List<String> levels = List.of("Бакалавриат ", "Магистратура ");
-    private static List<String> fictionNames = new ArrayList<>();
-    private static List<String> fictionAuthors = new ArrayList<>();
-    private static List<Integer> years = new ArrayList<>();
+    private List<String> educationNames = new ArrayList<>();
+    private List<String> universities = new ArrayList<>();
+    private List<String> educationAuthors = new ArrayList<>();
+    private List<String> levels = List.of("Бакалавриат", "Магистратура");
+    private List<String> fictionNames = new ArrayList<>();
+    private List<String> fictionAuthors = new ArrayList<>();
+    private List<Integer> years = new ArrayList<>();
+    private final String fictionPath = "C:\\Users\\krist\\Downloads\\Telegram Desktop\\Англ.лит..csv";
+    private final String eductionPath = "C:\\Users\\krist\\Downloads\\Англ.уч..csv";
+    private final CsvProvider provider = new CsvProvider();
 
     @Override
     public Book createTextbook() {
@@ -36,61 +39,76 @@ public class EnglishBookFactory implements Bookfactory {
         return new EnglishFiction(fullName, year);
     }
 
-    public static List<String> getEducationNames() {
+    @Override
+    public void cleanInfo() {
+        this.fictionNames.clear();
+        this.fictionAuthors.clear();
+        this.years.clear();
+        this.educationNames.clear();
+        this.universities.clear();
+        this.educationAuthors.clear();
+    }
+    
+    @Override
+    public void readInfo() {
+        provider.readEnglishEducationBooksInfo(eductionPath, this);
+        provider.readEnglishFictionBooksInfo(fictionPath, this);
+    }
+
+    public List<String> getEducationNames() {
         return educationNames;
     }
 
-    public static void setEducationNames(List<String> educationNames) {
-        EnglishBookFactory.educationNames = educationNames;
+    public void setEducationNames(List<String> educationNames) {
+        this.educationNames = educationNames;
     }
 
-    public static List<String> getUniversities() {
+    public List<String> getUniversities() {
         return universities;
     }
 
-    public static void setUniversities(List<String> universities) {
-        EnglishBookFactory.universities = universities;
+    public void setUniversities(List<String> universities) {
+        this.universities = universities;
     }
 
-    public static List<String> getEducationAuthors() {
+    public List<String> getEducationAuthors() {
         return educationAuthors;
     }
 
-    public static void setEducationAuthors(List<String> educationAuthors) {
-        EnglishBookFactory.educationAuthors = educationAuthors;
+    public void setEducationAuthors(List<String> educationAuthors) {
+        this.educationAuthors = educationAuthors;
     }
 
-    public static List<String> getLevels() {
+    public List<String> getLevels() {
         return levels;
     }
 
-    public static void setLevels(List<String> levels) {
-        EnglishBookFactory.levels = levels;
+    public void setLevels(List<String> levels) {
+        this.levels = levels;
     }
 
-    public static List<String> getFictionNames() {
+    public List<String> getFictionNames() {
         return fictionNames;
     }
 
-    public static void setFictionNames(List<String> fictionNames) {
-        EnglishBookFactory.fictionNames = fictionNames;
+    public void setFictionNames(List<String> fictionNames) {
+        this.fictionNames = fictionNames;
     }
 
-    public static List<String> getFictionAuthors() {
+    public List<String> getFictionAuthors() {
         return fictionAuthors;
     }
 
-    public static void setFictionAuthors(List<String> fictionAuthors) {
-        EnglishBookFactory.fictionAuthors = fictionAuthors;
+    public void setFictionAuthors(List<String> fictionAuthors) {
+        this.fictionAuthors = fictionAuthors;
     }
 
-    public static List<Integer> getYears() {
+    public List<Integer> getYears() {
         return years;
     }
 
-    public static void setYears(List<Integer> years) {
-        EnglishBookFactory.years = years;
+    public void setYears(List<Integer> years) {
+        this.years = years;
     }
-    
-    
+
 }

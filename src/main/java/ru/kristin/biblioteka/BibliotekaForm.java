@@ -67,14 +67,6 @@ public class BibliotekaForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        CsvProvider provider = new CsvProvider();
-        provider.cleanAll();
-        provider.readEnglishEducationBooksInfo("C:\\Users\\krist\\Downloads\\Англ.уч..csv");
-        provider.readEnglishFictionBooksInfo("C:\\Users\\krist\\Downloads\\Telegram Desktop\\Англ.лит..csv");
-        provider.readRussianEducationBooksInfo("C:\\Users\\krist\\Downloads\\Telegram Desktop\\Рус.уч. (3).csv");
-        provider.readRussianFictionBooksInfo("C:\\Users\\krist\\Downloads\\Telegram Desktop\\Рус.лит..csv");
-        provider.readPeopleInfo("C:\\Users\\krist\\Downloads\\Telegram Desktop\\все.csv");
         DataManipulation dm = new DataManipulation();
         dm.creationBook();
         dm.creationTeacher();

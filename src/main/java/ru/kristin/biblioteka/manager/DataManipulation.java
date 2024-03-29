@@ -1,5 +1,7 @@
 package main.java.ru.kristin.biblioteka.manager;
 
+
+
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -20,14 +22,18 @@ public class DataManipulation {
     private ArrayList<Book> books = new ArrayList<>();
 
     public void creationStudent() {
-        Director studentDirector = new Director(new StudentBuilder());
+        StudentBuilder builder = new StudentBuilder();
+        builder.readInfo();
+        Director studentDirector = new Director(builder);
         for (int i = 0; i < 61; i++) {
             students.add(studentDirector.createUser(books));
         }
     }
 
     public void creationTeacher() {
-        Director studentDirector = new Director(new TeacherBuilder());
+        TeacherBuilder tBuilder = new TeacherBuilder();
+        tBuilder.readInfo();
+        Director studentDirector = new Director(tBuilder);
         for (int i = 0; i < 21; i++) {
             teachers.add(studentDirector.createUser(books));
         }
@@ -36,10 +42,10 @@ public class DataManipulation {
     public void creationBook() {
         EnglishBookFactory ebfactory = new EnglishBookFactory();
         RussianBookFactory rbfactory = new RussianBookFactory();
-        int randomRussianFiction;
-        int randomRussianTextbook;
-        randomRussianFiction = (int) Math.round(Math.random() * 15 + 20);
-        randomRussianTextbook = (int) Math.round(Math.random() * 15 + 20);
+        ebfactory.readInfo();
+        rbfactory.readInfo();
+        int randomRussianFiction = (int) Math.round(Math.random() * 15 + 20);
+        int randomRussianTextbook = (int) Math.round(Math.random() * 15 + 20);
         for (int i = 0; i < randomRussianFiction; i++) {
             books.add(rbfactory.createFiction());
         }

@@ -1,14 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.java.ru.kristin.biblioteka.people;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
 import main.java.ru.kristin.biblioteka.Library.Book;
 
-public class StudentBuilder implements Builder {
+public class StudentBuilder extends Builder {
+
+    private List<String> maleSurnames = new ArrayList<>();
+    private List<String> femaleSurnames = new ArrayList<>();
+    private final String info = "C:\\Users\\krist\\Downloads\\Telegram Desktop\\все.csv";
 
     private String fullName;
 
@@ -19,23 +21,24 @@ public class StudentBuilder implements Builder {
         int indexOfSurname = 0;
         Integer randomSex = (int) Math.round(Math.random());
         if (randomSex.equals(0)) {
-            indexOfName = (int) Math.round(Math.random() * (femaleNames.size() - 1));
-            indexOfSurname = (int) Math.round(Math.random() * (femaleSurnames.size() - 1));
-            this.fullName = sb.append(femaleSurnames.get(indexOfSurname))
+            indexOfName = (int) Math.round(Math.random() * (getFemaleNames().size() - 1));
+            indexOfSurname = (int) Math.round(Math.random() * (getFemaleSurnames().size() - 1));
+            this.fullName = sb.append(getFemaleSurnames().get(indexOfSurname))
                     .append(" ")
-                    .append(femaleNames.get(indexOfName))
+                    .append(getFemaleNames().get(indexOfName))
                     .toString();
         }
         if (randomSex.equals(1)) {
-            indexOfName = (int) Math.round(Math.random() * (maleNames.size() - 1));
-            indexOfSurname = (int) Math.round(Math.random() * (maleSurnames.size() - 1));
-            this.fullName = sb.append(maleSurnames.get(indexOfSurname))
+            indexOfName = (int) Math.round(Math.random() * (getMaleNames().size() - 1));
+            indexOfSurname = (int) Math.round(Math.random() * (getMaleSurnames().size() - 1));
+            this.fullName = sb.append(getMaleSurnames().get(indexOfSurname))
                     .append(" ")
-                    .append(maleNames.get(indexOfName))
+                    .append(getMaleNames().get(indexOfName))
                     .toString();
         }
         return this;
     }
+
     @Override
     public People bldUser(List<Book> books) {
         People user = new Student(fullName);
@@ -48,4 +51,43 @@ public class StudentBuilder implements Builder {
         }
         return user;
     }
+
+    @Override
+    public void readInfo() {
+        getProvider().readCommonInfo(info, this);
+        getProvider().readStudentInfo(info, this);
+    }
+
+    @Override
+    public void cleanInfo() {
+        maleSurnames.clear();
+        femaleSurnames.clear();
+        getMaleNames().clear();
+        getFemaleNames().clear();
+    }
+
+    public List<String> getMaleSurnames() {
+        return maleSurnames;
+    }
+
+    public void setMaleSurnames(List<String> maleSurnames) {
+        this.maleSurnames = maleSurnames;
+    }
+
+    public List<String> getFemaleSurnames() {
+        return femaleSurnames;
+    }
+
+    public void setFemaleSurnames(List<String> femaleSurnames) {
+        this.femaleSurnames = femaleSurnames;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
 }

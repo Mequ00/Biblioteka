@@ -1,35 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.java.ru.kristin.biblioteka.people;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
 import main.java.ru.kristin.biblioteka.Library.Book;
 
-public class TeacherBuilder implements Builder {
+public class TeacherBuilder extends Builder {
+
+    private List<String> femaleTSurnames = new ArrayList<>();
+    private List<String> maleTSurnames = new ArrayList<>();
+    private List<String> secondNames = new ArrayList<>();
+    private final String info = "C:\\Users\\krist\\Downloads\\Telegram Desktop\\все.csv";
 
     private String fullName;
 
     @Override
     public Builder bldFullName() {
-        String ending = null;
-        int indexOfName = 0;
-        int indexOfSurname = 0;
+        String ending;
+        int indexOfName;
+        int indexOfSurname;
         int indexOfSecondName = (int) Math.round(Math.random() * (secondNames.size() - 1));
         Integer randomSex = (int) Math.round(Math.random());
         if (randomSex.equals(0)) {
-            indexOfName = (int) Math.round(Math.random() * (femaleNames.size() - 1));
+            indexOfName = (int) Math.round(Math.random() * (getFemaleNames().size() - 1));
             indexOfSurname = (int) Math.round(Math.random() * (femaleTSurnames.size() - 1));
             ending = "на";
-            this.fullName = fullNameByGender(indexOfName, indexOfSurname, indexOfSecondName, femaleNames, femaleTSurnames, secondNames, ending);
+            this.fullName = fullNameByGender(indexOfName, indexOfSurname, indexOfSecondName, getFemaleNames(), femaleTSurnames, secondNames, ending);
         }
         if (randomSex.equals(1)) {
-            indexOfName = (int) Math.round(Math.random() * (maleNames.size() - 1));
+            indexOfName = (int) Math.round(Math.random() * (getMaleNames().size() - 1));
             indexOfSurname = (int) Math.round(Math.random() * (maleTSurnames.size() - 1));
             ending = "ич";
-            this.fullName = fullNameByGender(indexOfName, indexOfSurname, indexOfSecondName, maleNames, maleTSurnames, secondNames, ending);
+            this.fullName = fullNameByGender(indexOfName, indexOfSurname, indexOfSecondName, getMaleNames(), maleTSurnames, secondNames, ending);
         }
         return this;
 
@@ -48,8 +51,23 @@ public class TeacherBuilder implements Builder {
         return user;
     }
 
+    @Override
+    public void cleanInfo() {
+        femaleTSurnames.clear();
+        maleTSurnames.clear();
+        secondNames.clear();
+        getMaleNames().clear();
+        getFemaleNames().clear();
+    }
+
+    @Override
+    public void readInfo() {
+        getProvider().readCommonInfo(info, this);
+        getProvider().readTeacherInfo(info, this);
+    }
+
     public String fullNameByGender(int indexOfName, int indexOfSurname, int indexOfSecondName, List<String> names, List<String> surnames,
-         List<String> secondnames, String ending) {
+            List<String> secondnames, String ending) {
         StringBuilder sb = new StringBuilder();
         return sb.append(surnames.get(indexOfSurname))
                 .append(" ")
@@ -58,6 +76,38 @@ public class TeacherBuilder implements Builder {
                 .append(secondnames.get(indexOfSecondName))
                 .append(ending)
                 .toString();
+    }
+
+    public List<String> getFemaleTSurnames() {
+        return femaleTSurnames;
+    }
+
+    public void setFemaleTSurnames(List<String> femaleTSurnames) {
+        this.femaleTSurnames = femaleTSurnames;
+    }
+
+    public List<String> getMaleTSurnames() {
+        return maleTSurnames;
+    }
+
+    public void setMaleTSurnames(List<String> maleTSurnames) {
+        this.maleTSurnames = maleTSurnames;
+    }
+
+    public List<String> getSecondNames() {
+        return secondNames;
+    }
+
+    public void setSecondNames(List<String> secondNames) {
+        this.secondNames = secondNames;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
 }
